@@ -1,0 +1,221 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Travel Planner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .slideshow {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .slide.active {
+      opacity: 1;
+    }
+    .scrollable {
+      max-height: 500px;
+      overflow-y: scroll;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-purple-100 to-purple-300 min-h-screen flex flex-col items-center">
+<style>
+  img.h-12 {
+    width: 100px; /* Adjust the width as needed */
+  }
+</style>
+  <header class="w-full bg-blue-600 p-4 text-white flex justify-between items-center shadow-lg">
+    <div class="flex items-center space-x-6">
+      <img src="static/images/logo.webp" alt="Smart Travel Planner Logo" class="h-12">
+      <nav class="space-x-7 text-xl">
+        <a href="#" class="hover:underline">Home</a>
+        <a href="#destinations" class="hover:underline">Destinations</a>
+        <a href="#contact" class="hover:underline">Contact</a>
+        <a href="#pay" class="hover:underline">Pay Now</a>
+      </nav>
+    </div>
+    <div class="flex items-center">
+      <input id="headerSearch" type="text" placeholder="Search..." class="p-2 border rounded-md w-64">
+      <button class="bg-white text-blue-600 p-2 rounded-md ml-2">Search</button>
+    </div>
+  </header>
+  <!-- <header class="w-full bg-blue-600 p-4 text-white flex justify-between items-center shadow-lg">
+    <img src="static/images/logo.webp" alt="Smart Travel Planner Logo" class="h-12">
+    <nav class="space-x-6 text-xl">
+      <a href="#" class="hover:underline">Home</a>
+      <a href="#destinations" class="hover:underline">Destinations</a>
+      <a href="#contact" class="hover:underline">Contact</a>
+      <a href="#pay" class="hover:underline">Pay Now</a>
+    </nav>
+    </header> --> 
+
+  <!-- Hero Section with Slideshow -->
+  <section class="slideshow relative w-full h-[80vh] mt-0">
+    <div class="slide active" style="background-image: url('static/images/image1.jpg');"></div>
+    <div class="slide" style="background-image: url('static/images/image2.jpg');"></div>
+    <div class="slide" style="background-image: url('static/images/image3.jpg');"></div>
+  </section>
+
+  <!-- Trip Input Section -->
+  <section class="p-6 max-w-3xl w-full bg-white shadow-lg mt-[-40px] rounded-lg relative z-10">
+    <h2 class="text-2xl font-semibold mb-4 text-center">Find Your Destination</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <input id="budgetInput" type="number" placeholder="Enter budget in ₹" class="p-2 border rounded-md">
+        <input id="durationInput" type="number" placeholder="Enter duration in days" class="p-2 border rounded-md">
+        <button id="planTripBtn" class="bg-blue-600 text-white p-2 rounded-md">Plan My Trip</button>
+    </div>
+  </section>
+
+  <!-- Destinations Section -->
+  <section id="destinations" class="mt-12 max-w-6xl w-full text-center">
+    <h2 class="text-3xl font-bold mb-6">🌟 Available Destinations</h2>
+    <div id="destinationContainer" class="scrollable flex flex-col gap-6 p-4">
+      <!-- JS will insert destination cards here -->
+    </div>
+  <section class="w-full p-6 flex justify-between items-center mt-12 gap-7">
+    <div class="w-1/2 text-left">
+      <h2 class="text-4xl font-bold mb-4">Why Choose Us?</h2>
+      <p class="text-lg text-gray-700 leading-relaxed">We offer personalized travel plans, budget-friendly options, and 24/7 support.We show destinations you can afford, not just exact matches. Discover hidden gems that fit right within your wallet and explore a diverse range of locations curated just for you.</p>
+    </div>
+    <div class="w-1/2 text-left">
+      <h2 class="text-4xl font-bold mb-5">Plan Your Next Adventure</h2>
+      <p class="text-lg text-gray-700 leading-relaxed">With Trips, you get two trip planners in one—use AI to build your trip or build it yourself. Either way, there’s more than 8 million spots to discover, with over one billion traveller reviews and opinions to guide you.!</p>
+    </div>
+  </section>
+
+ <!-- Booking Modal -->
+<div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center z-50 backdrop-blur-sm">
+  <div class="bg-black text-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-700">
+    <h3 class="text-2xl font-bold mb-6 text-center">✨ Book Your Trip ✨</h3>
+    <form id="bookingForm">
+      <input type="text" id="userName" placeholder="Your Name" class="w-full p-3 border-none rounded-lg bg-gray-800 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      <input type="tel" id="userMobile" placeholder="Mobile Number" class="w-full p-3 border-none rounded-lg bg-gray-800 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+      <input type="hidden" id="destinationName">
+      <div class="flex justify-end gap-4">
+        <button type="button" onclick="closeBookingModal()" class="text-gray-300 hover:underline">Cancel</button>
+        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold shadow-md transition duration-200">Book Now</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+  <!-- Footer Section -->
+ <!-- Footer Section -->
+<div class="w-full bg-purple-600 text-white mt-12">
+  <footer id="contact" class="max-w-none px-4 py-6 text-center">
+    <p class="text-lg">&copy; 2025 Smart Travel Planner | All rights reserved</p>
+    <p class="text-lg">
+      Contact Us: 
+      <a href="mailto:info@smarttravel.com" class="underline hover:text-gray-200">
+        info@smarttravel.com
+      </a>
+    </p>
+  </footer>
+</div>
+
+
+
+  <!-- Slideshow Script -->
+  <script>
+    let slides = document.querySelectorAll('.slide');
+    let currentIndex = 0;
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % slides.length;
+      showSlide(currentIndex);
+    }
+    setInterval(nextSlide, 3000);
+  </script>
+
+  <!-- Plan Trip Button Logic -->
+  <script>
+    document.getElementById('planTripBtn').addEventListener('click', () => {
+        const budget = document.getElementById('budgetInput').value;
+        const duration = document.getElementById('durationInput').value;
+
+        if (!budget || !duration) {
+            alert('Please enter both budget and duration.');
+            return;
+        }
+
+        fetch('/api/plan-trip', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ budget: parseInt(budget), duration: parseInt(duration) })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const container = document.querySelector('#destinationContainer');
+            container.innerHTML = '';
+            if (data.length === 0) {
+                container.innerHTML = '<p>No matching destinations found.</p>';
+            } else {
+              data.forEach(dest => {
+                container.innerHTML += `
+                    <div class="w-full bg-white shadow-xl rounded-xl p-6 mb-8 hover:shadow-2xl transition duration-300 ease-in-out">
+                        <img src="${dest.image_url}" class="rounded-lg w-full h-64 object-cover mb-4">
+                        <h3 class="font-bold text-2xl mb-2">${dest.name}</h3>
+                        <p class="text-gray-600 text-base mb-4">Avg. Cost: ₹${dest.cost} | Duration: ${dest.duration} Days</p>
+
+                        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                            <button 
+                              onclick="openBookingModal('${dest.name}')" 
+                              class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg px-8 py-4 rounded-xl w-full md:w-auto">
+                              Book
+                              </button>
+
+
+                            <div class="flex gap-6 text-base font-medium text-blue-600">
+                                <a href="#" class="hover:underline">More Details</a>
+                                <a href="#" class="hover:underline">Book Hotel</a>
+                                <a href="#" class="hover:underline">Check Reviews</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+              });
+            }
+        });
+    });
+  </script>
+
+  <script>
+    function openBookingModal(destination) {
+      document.getElementById('bookingModal').classList.remove('hidden');
+      document.getElementById('destinationName').value = destination;
+    }
+
+    function closeBookingModal() {
+      document.getElementById('bookingModal').classList.add('hidden');
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('userName').value;
+      const mobile = document.getElementById('userMobile').value;
+      const destination = document.getElementById('destinationName').value;
+
+      alert(`Booking confirmed for ${name} to ${destination}. We will contact you at ${mobile}.`);
+      closeBookingModal();
+    });
+  </script>
+
+</body>
+</html>
